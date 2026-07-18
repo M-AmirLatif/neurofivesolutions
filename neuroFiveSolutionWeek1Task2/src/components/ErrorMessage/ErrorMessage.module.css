@@ -1,0 +1,7 @@
+.error { max-width: 520px; margin: 4rem auto; padding: 2.5rem 1.5rem; border: 1px solid #fecaca; border-radius: var(--radius); background: #fff; text-align: center; box-shadow: var(--shadow); }
+.error > span { width: 58px; height: 58px; margin: 0 auto 1rem; display: grid; place-items: center; border-radius: 16px; color: #dc2626; background: #fef2f2; }
+.error h2 { margin: 0; font-size: 1.35rem; }
+.error p { margin: .6rem 0 1.4rem; color: var(--muted); }
+.error button { display: inline-flex; align-items: center; gap: .5rem; padding: .75rem 1rem; border: 0; border-radius: 10px; color: white; background: var(--primary); font: inherit; font-weight: 750; cursor: pointer; }
+.error button:hover { background: var(--primary-dark); }
+.error button svg { width: 17px; }

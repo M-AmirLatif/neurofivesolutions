@@ -1,0 +1,6 @@
+.footer { border-top: 1px solid var(--border); background: white; }
+.footer > div { width: min(100% - 2rem,var(--content-width)); min-height: 92px; margin-inline: auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.footer span { display: flex; align-items: center; gap: .5rem; color: var(--text); font-weight: 800; }
+.footer span svg { width: 18px; color: var(--primary); }
+.footer p { color: var(--muted); font-size: .8rem; }
+@media (max-width: 580px) { .footer > div { padding: 1.25rem 0; flex-direction: column; justify-content: center; text-align: center; } .footer p { margin: 0; } }

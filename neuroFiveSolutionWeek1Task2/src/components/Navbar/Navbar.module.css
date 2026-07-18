@@ -1,0 +1,7 @@
+.navbar { position: sticky; top: 0; z-index: 10; border-bottom: 1px solid rgba(226,232,240,.9); background: rgba(255,255,255,.88); backdrop-filter: blur(16px); }
+.inner { width: min(100% - 2rem, var(--content-width)); height: 72px; margin-inline: auto; display: flex; align-items: center; justify-content: space-between; }
+.brand { color: var(--text); display: inline-flex; align-items: center; gap: .75rem; font-size: 1.05rem; font-weight: 800; letter-spacing: -.02em; }
+.logo { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 12px; color: white; background: linear-gradient(135deg,var(--primary),var(--secondary)); box-shadow: 0 7px 18px rgba(37,99,235,.24); }
+.logo svg { width: 21px; }
+.badge { padding: .42rem .72rem; border: 1px solid #dbeafe; border-radius: 999px; color: var(--primary-dark); background: #eff6ff; font-size: .74rem; font-weight: 700; }
+@media (max-width: 480px) { .badge { display: none; } }

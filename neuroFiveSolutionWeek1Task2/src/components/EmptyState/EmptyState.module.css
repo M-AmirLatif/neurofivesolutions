@@ -1,0 +1,6 @@
+.empty { padding: 4.5rem 1rem 6rem; text-align: center; }
+.empty span { width: 62px; height: 62px; display: grid; place-items: center; margin: 0 auto 1rem; border-radius: 18px; color: var(--primary); background: #dbeafe; }
+.empty h2 { margin: 0; font-size: 1.4rem; }
+.empty p { margin: .55rem 0 1.25rem; color: var(--muted); }
+.empty button { padding: .7rem .9rem; border: 1px solid var(--border); border-radius: 10px; color: var(--text); background: white; font: inherit; font-weight: 700; cursor: pointer; }
+.empty button:hover { border-color: #93c5fd; color: var(--primary); }

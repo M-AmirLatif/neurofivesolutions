@@ -1,0 +1,13 @@
+import { BrainCircuit, ChartNoAxesCombined, ShieldCheck, FileChartColumn, UsersRound, Blocks, PlugZap, Sparkles, Rocket } from 'lucide-react';
+export const navLinks=[['Features','features'],['How It Works','how-it-works'],['Pricing','pricing'],['Testimonials','testimonials']];
+export const features=[
+  {icon:BrainCircuit,title:'AI Insights',description:'Surface patterns, anomalies, and opportunities automatically with always-on intelligence.'},
+  {icon:ChartNoAxesCombined,title:'Real-Time Analytics',description:'Monitor live performance across every channel from one beautifully clear workspace.'},
+  {icon:ShieldCheck,title:'Enterprise Security',description:'Protect every insight with encryption, role-based access, and audit-ready controls.'},
+  {icon:FileChartColumn,title:'Smart Reports',description:'Turn complex data into polished, stakeholder-ready reports in a single click.'},
+  {icon:UsersRound,title:'Team Collaboration',description:'Share context, assign next steps, and keep every decision maker aligned.'},
+  {icon:Blocks,title:'API Integrations',description:'Connect the tools you already use through flexible APIs and native integrations.'}
+];
+export const steps=[{icon:PlugZap,title:'Connect Data',description:'Securely connect your stack in minutes—no engineering lift required.'},{icon:Sparkles,title:'AI Analysis',description:'NovaPulse finds the signals that matter and explains what changed.'},{icon:Rocket,title:'Take Action',description:'Turn recommendations into decisions your whole team can move on.'}];
+export const prices=[{name:'Starter',price:19,desc:'For individuals exploring smarter analytics.',items:['5 data sources','10 AI reports / month','7-day data history','Email support']},{name:'Pro',price:49,desc:'For growing teams moving at full speed.',popular:true,items:['Unlimited data sources','Unlimited AI reports','1-year data history','Team collaboration','Priority support']},{name:'Enterprise',price:99,desc:'For organizations that need more control.',items:['Everything in Pro','Advanced permissions','Custom data retention','Dedicated success manager']}];
+export const testimonials=[{initials:'JM',name:'Jordan Mitchell',role:'VP of Growth, Vertex',quote:'NovaPulse transformed our Monday reporting ritual. We see what changed, why it matters, and what to do next in minutes.'},{initials:'AK',name:'Amara Khan',role:'COO, Quantum Labs',quote:'The clarity is remarkable. Our teams finally trust the same numbers and can spend their energy making better decisions.'},{initials:'DL',name:'Diego Lee',role:'Head of Data, Orbit',quote:'It feels like adding an analyst to every meeting. The AI insights consistently catch signals we would have missed.'}];

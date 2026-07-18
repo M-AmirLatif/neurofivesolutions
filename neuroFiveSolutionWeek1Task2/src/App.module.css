@@ -1,0 +1,18 @@
+.app { min-height: 100vh; display: flex; flex-direction: column; }
+.app main { flex: 1; }
+.hero { position: relative; overflow: hidden; min-height: 370px; padding: 4.5rem max(1rem,calc((100% - var(--content-width))/2)); display: flex; flex-direction: column; justify-content: center; color: white; background: radial-gradient(circle at 85% 20%,rgba(56,189,248,.3),transparent 27%),linear-gradient(125deg,#0f172a 0%,#172554 55%,#1e3a8a 100%); }
+.heroGlow { position: absolute; width: 320px; height: 320px; right: 8%; bottom: -62%; border: 1px solid rgba(255,255,255,.14); border-radius: 50%; box-shadow: 0 0 0 60px rgba(255,255,255,.035),0 0 0 120px rgba(255,255,255,.025); }
+.eyebrow { display: flex; align-items: center; gap: .55rem; margin-bottom: .7rem; color: #bae6fd; font-size: .74rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+.eyebrow span { width: 24px; height: 2px; background: var(--secondary); }
+.hero h1 { max-width: 720px; margin: 0; font-size: clamp(2.6rem,6vw,4.8rem); line-height: .98; letter-spacing: -.06em; }
+.hero h1 em { color: #7dd3fc; font-style: normal; }
+.hero > p { max-width: 570px; margin: 1.25rem 0 0; color: #cbd5e1; font-size: clamp(.95rem,2vw,1.1rem); }
+.stats { position: absolute; right: max(1rem,calc((100% - var(--content-width))/2)); top: 50%; display: flex; flex-direction: column; transform: translateY(-50%); }
+.stats strong { font-size: 3rem; line-height: 1; letter-spacing: -.06em; }
+.stats span { color: #bae6fd; font-size: .78rem; }
+.content { width: min(100% - 2rem,var(--content-width)); margin-inline: auto; }
+.results { min-height: 28px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between; color: var(--muted); font-size: .83rem; }
+.results p { margin: 0; }
+.results strong { color: var(--text); }
+.results span { padding: .3rem .6rem; border-radius: 999px; color: var(--primary); background: #dbeafe; font-size: .7rem; font-weight: 800; }
+@media (max-width: 800px) { .hero { min-height: 340px; padding-top: 3.5rem; padding-bottom: 3.5rem; } .stats { position: static; margin-top: 1.6rem; transform: none; } .stats strong { font-size: 1.6rem; } }

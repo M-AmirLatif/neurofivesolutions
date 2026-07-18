@@ -1,0 +1,11 @@
+.controls { display: grid; grid-template-columns: minmax(0,1fr) 220px; gap: 1rem; margin: 2rem 0 1.5rem; }
+.searchWrap,.selectWrap { min-height: 52px; display: flex; align-items: center; gap: .75rem; padding: 0 1rem; border: 1px solid var(--border); border-radius: 14px; background: white; box-shadow: var(--shadow-sm); transition: border-color .2s, box-shadow .2s; }
+.searchWrap:focus-within,.selectWrap:focus-within { border-color: #93c5fd; box-shadow: 0 0 0 4px rgba(37,99,235,.1); }
+.searchWrap > svg,.selectWrap > svg { width: 19px; flex: 0 0 auto; color: var(--muted); }
+.searchWrap input,.selectWrap select { width: 100%; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--text); font: inherit; }
+.searchWrap input::placeholder { color: #94a3b8; }
+.selectWrap select { cursor: pointer; }
+.clear { width: 30px; height: 30px; display: grid; place-items: center; flex: 0 0 auto; border: 0; border-radius: 8px; color: var(--muted); background: transparent; cursor: pointer; }
+.clear:hover { color: var(--text); background: var(--surface-muted); }
+.clear svg { width: 17px; }
+@media (max-width: 640px) { .controls { grid-template-columns: 1fr; margin-top: 1.5rem; } }

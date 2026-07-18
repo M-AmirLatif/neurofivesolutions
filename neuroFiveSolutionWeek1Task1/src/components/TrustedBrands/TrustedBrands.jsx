@@ -1,0 +1,2 @@
+import Container from '../common/Container/Container';import styles from './TrustedBrands.module.css';
+export default function TrustedBrands(){return <section className={styles.section} aria-label="Trusted companies"><Container><p>Trusted by data-driven teams worldwide</p><div className={styles.logos}>{['Vertex','QUANTUM','orbit','NEXA','pulse'].map(x=><span key={x}>{x}</span>)}</div></Container></section>}
