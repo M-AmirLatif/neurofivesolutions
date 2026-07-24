@@ -1,0 +1,22 @@
+[
+  {
+    "id": "welcome-task",
+    "title": "Explore the Momentum workspace",
+    "description": "Try editing this task, marking it complete, or creating something new.",
+    "priority": "medium",
+    "dueDate": "",
+    "completed": false,
+    "createdAt": "2026-07-24T12:00:00.000Z",
+    "updatedAt": "2026-07-24T16:04:20.391Z"
+  },
+  {
+    "id": "b7167274-ffd9-4d7d-bff4-cbc9e2fe2151",
+    "title": "Record CRUD project demo",
+    "description": "Demonstrate all four CRUD operations",
+    "priority": "high",
+    "dueDate": "2026-07-14",
+    "completed": false,
+    "createdAt": "2026-07-24T15:46:04.293Z",
+    "updatedAt": "2026-07-24T16:04:19.229Z"
+  }
+]
