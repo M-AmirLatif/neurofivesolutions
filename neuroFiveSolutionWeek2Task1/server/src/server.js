@@ -15,5 +15,5 @@ if (existsSync(clientBuild)) {
 }
 
 app.listen(port, () => {
-  console.log(`Momentum is running at http://localhost:${port}`);
+  console.log('Momentum API ready');
 });

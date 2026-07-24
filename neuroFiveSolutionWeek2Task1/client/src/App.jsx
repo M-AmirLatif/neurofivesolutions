@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   AlertCircle, Check, CheckCircle2, ChevronDown, Circle, Clock3, Edit3,
-  ListTodo, LoaderCircle, Plus, RefreshCw, Search, Sparkles, Trash2, X
+  CalendarDays, LayoutDashboard, ListTodo, LoaderCircle, Plus, RefreshCw, Search, Sparkles, Trash2, TrendingUp, X, Zap
 } from 'lucide-react';
 import { taskApi } from './api';
 
@@ -233,70 +233,40 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <header className="topbar">
-        <a className="brand" href="#top" aria-label="Momentum home"><span><Sparkles size={19} /></span>momentum</a>
-        <div className="api-status"><i /> API connected</div>
-      </header>
+      <aside className="sidebar">
+        <a className="brand" href="#top" aria-label="Momentum home"><span><Sparkles size={18} /></span><strong>momentum</strong></a>
+        <div className="sidebar-section"><span className="sidebar-label">Workspace</span><nav aria-label="Task views">
+          <button className={filter === 'all' ? 'active' : ''} onClick={() => setFilter('all')}><LayoutDashboard size={18} /> Overview <span>{tasks.length}</span></button>
+          <button className={filter === 'active' ? 'active' : ''} onClick={() => setFilter('active')}><Zap size={18} /> Active tasks <span>{tasks.length - completed}</span></button>
+          <button className={filter === 'completed' ? 'active' : ''} onClick={() => setFilter('completed')}><CheckCircle2 size={18} /> Completed <span>{completed}</span></button>
+        </nav></div>
+        <div className="sidebar-focus"><div className="focus-icon"><TrendingUp size={19} /></div><span>Weekly focus</span><strong>{progress}% complete</strong><div className="mini-progress"><i style={{ width: `${progress}%` }} /></div><p>{completed ? `${completed} task${completed === 1 ? '' : 's'} completed. Keep the momentum going.` : 'Complete your first task to start your streak.'}</p></div>
+        <div className="sidebar-status"><i /><span>API connected</span></div>
+      </aside>
 
-      <main id="top">
-        <section className="hero">
-          <div>
-            <span className="eyebrow">Your focused workspace</span>
-            <h1>Make progress<br /><em>visible.</em></h1>
-            <p>Capture what matters, focus your energy, and build momentum—one meaningful task at a time.</p>
-          </div>
-          <div className="progress-card">
-            <div className="progress-top"><span>This week’s progress</span><strong>{progress}%</strong></div>
-            <div className="progress-track"><span style={{ width: `${progress}%` }} /></div>
-            <div className="stats">
-              <div><strong>{tasks.length}</strong><span>Total tasks</span></div>
-              <div><strong>{tasks.length - completed}</strong><span>In progress</span></div>
-              <div><strong>{completed}</strong><span>Completed</span></div>
+      <div className="app-main">
+        <header className="topbar"><div><span className="mobile-brand">momentum</span><h1>Task command center</h1></div><div className="date-chip"><CalendarDays size={17} /><span>{new Intl.DateTimeFormat('en', { weekday: 'short', month: 'short', day: 'numeric' }).format(new Date())}</span></div></header>
+        <main id="top" className="dashboard">
+          <section className="welcome-banner">
+            <div className="welcome-copy"><span className="eyebrow">Focus. Execute. Grow.</span><h2>Turn today’s priorities<br />into visible progress.</h2><p>A focused workspace for capturing ideas, organizing priorities, and finishing the work that matters.</p><button className="banner-button" onClick={() => { setEditing(null); document.querySelector('.task-form')?.scrollIntoView({ behavior: 'smooth', block: 'center' }); }}><Plus size={18} /> Create a task</button></div>
+            <div className="progress-visual"><div className="progress-ring" style={{ '--progress': `${progress * 3.6}deg` }}><div><strong>{progress}%</strong><span>complete</span></div></div><div className="progress-caption"><strong>{completed} of {tasks.length}</strong><span>tasks completed</span></div></div>
+          </section>
+          <section className="metrics-grid" aria-label="Task statistics">
+            <article><div className="metric-icon blue"><ListTodo size={20} /></div><div><span>Total tasks</span><strong>{tasks.length}</strong><small>Everything in your workspace</small></div></article>
+            <article><div className="metric-icon amber"><Zap size={20} /></div><div><span>In progress</span><strong>{tasks.length - completed}</strong><small>Tasks requiring attention</small></div></article>
+            <article><div className="metric-icon green"><CheckCircle2 size={20} /></div><div><span>Completed</span><strong>{completed}</strong><small>Your finished milestones</small></div></article>
+          </section>
+          <section className="workspace">
+            <div className="task-panel">
+              <div className="panel-heading"><div><span className="eyebrow">Your workflow</span><h2>Priority queue</h2><p>Stay focused on what moves the work forward.</p></div><span className="task-count">{filteredTasks.length} {filteredTasks.length === 1 ? 'task' : 'tasks'}</span></div>
+              <div className="toolbar"><div className="filters" role="group" aria-label="Filter tasks">{[{ value: 'all', count: tasks.length }, { value: 'active', count: tasks.length - completed }, { value: 'completed', count: completed }].map(({ value, count }) => <button key={value} className={filter === value ? 'active' : ''} onClick={() => setFilter(value)} aria-pressed={filter === value}>{value}<span>{count}</span></button>)}</div><label className="search"><Search size={17} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search your workspace" aria-label="Search tasks" /></label></div>
+              {loading ? <div className="state-card"><LoaderCircle className="spin" size={30} /><h3>Loading your workspace...</h3><p>Fetching the latest tasks from the API.</p></div> : loadError ? <div className="state-card error-state"><AlertCircle size={30} /><h3>Couldn’t load your tasks</h3><p>{loadError}</p><button className="secondary-button" onClick={loadTasks}><RefreshCw size={17} /> Try again</button></div> : filteredTasks.length ? <div className="task-list">{filteredTasks.map((task) => <TaskCard key={task.id} task={task} action={action} onToggle={toggleTask} onEdit={(selected) => { setEditing(selected); document.querySelector('.task-form')?.scrollIntoView({ behavior: 'smooth', block: 'center' }); }} onDelete={setDeleting} />)}</div> : <div className="state-card"><div className="empty-icon"><ListTodo size={27} /></div><h3>{tasks.length ? 'No matching tasks' : 'Your workspace is clear'}</h3><p>{tasks.length ? 'Adjust your search or choose another filter.' : 'Create your first task and start building momentum.'}</p>{tasks.length > 0 && <button className="secondary-button" onClick={() => { setQuery(''); setFilter('all'); }}><X size={17} /> Clear filters</button>}</div>}
             </div>
-          </div>
-        </section>
-
-        <section className="workspace">
-          <aside><TaskForm task={editing} busy={action?.type === 'create' || action?.type === 'update'} onSave={editing ? updateTask : createTask} onCancel={() => setEditing(null)} /></aside>
-
-          <div className="task-panel">
-            <div className="panel-heading">
-              <div><span className="eyebrow">My workspace</span><h2>Tasks that move you forward</h2></div>
-              <span className="task-count">{filteredTasks.length} {filteredTasks.length === 1 ? 'task' : 'tasks'}</span>
-            </div>
-
-            <div className="toolbar">
-              <div className="filters" role="group" aria-label="Filter tasks">
-                {[
-                  { value: 'all', count: tasks.length },
-                  { value: 'active', count: tasks.length - completed },
-                  { value: 'completed', count: completed }
-                ].map(({ value, count }) => (
-                  <button key={value} className={filter === value ? 'active' : ''} onClick={() => setFilter(value)} aria-pressed={filter === value}>
-                    {value}<span>{count}</span>
-                  </button>
-                ))}
-              </div>
-              <label className="search"><Search size={17} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search tasks…" aria-label="Search tasks" /></label>
-            </div>
-
-            {loading ? (
-              <div className="state-card"><LoaderCircle className="spin" size={30} /><h3>Loading your workspace…</h3><p>Fetching the latest tasks from the API.</p></div>
-            ) : loadError ? (
-              <div className="state-card error-state"><AlertCircle size={30} /><h3>Couldn’t load your tasks</h3><p>{loadError}</p><button className="secondary-button" onClick={loadTasks}><RefreshCw size={17} /> Try again</button></div>
-            ) : filteredTasks.length ? (
-              <div className="task-list">
-                {filteredTasks.map((task) => <TaskCard key={task.id} task={task} action={action} onToggle={toggleTask} onEdit={(selected) => { setEditing(selected); window.scrollTo({ top: 360, behavior: 'smooth' }); }} onDelete={setDeleting} />)}
-              </div>
-            ) : (
-              <div className="state-card"><div className="empty-icon"><ListTodo size={27} /></div><h3>{tasks.length ? 'No matching tasks' : 'Your workspace is clear'}</h3><p>{tasks.length ? 'Adjust your search or choose another filter.' : 'Create your first task and start building momentum.'}</p>{tasks.length > 0 && <button className="secondary-button" onClick={() => { setQuery(''); setFilter('all'); }}><X size={17} /> Clear filters</button>}</div>
-            )}
-          </div>
-        </section>
-      </main>
-
-      <footer><span>momentum</span><p>Built with React + Express · Full CRUD, real API, real progress.</p></footer>
-
+            <aside className="composer"><TaskForm task={editing} busy={action?.type === 'create' || action?.type === 'update'} onSave={editing ? updateTask : createTask} onCancel={() => setEditing(null)} /></aside>
+          </section>
+        </main>
+        <footer><span>Momentum workspace</span><p>Full-stack CRUD powered by React + Express</p></footer>
+      </div>
       {notice && <div className={`toast ${notice.type}`} role="status">{notice.type === 'success' ? <CheckCircle2 size={19} /> : <AlertCircle size={19} />}<span>{notice.text}</span><button onClick={() => setNotice(null)} aria-label="Dismiss notification"><X size={17} /></button></div>}
       {deleting && <ConfirmDialog task={deleting} busy={action?.type === 'delete'} onConfirm={deleteTask} onCancel={() => setDeleting(null)} />}
     </div>

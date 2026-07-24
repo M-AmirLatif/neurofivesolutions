@@ -25,7 +25,7 @@ Node.js 18 or newer is required.
 
 ```bash
 npm install
-npm run dev
+npm start
 ```
 
 Open `http://localhost:5173`. The API runs on `http://localhost:5000`.
@@ -34,7 +34,7 @@ Open `http://localhost:5173`. The API runs on `http://localhost:5000`.
 
 ```bash
 npm run build
-npm start
+npm run start:production
 ```
 
 The Express server serves the built React application and API from one process at `http://localhost:5000`.
