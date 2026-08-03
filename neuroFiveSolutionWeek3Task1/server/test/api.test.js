@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import { after, before, test } from 'node:test';
+import { rm } from 'node:fs/promises';
+import path from 'node:path';
+import request from 'supertest';
+import { createApp } from '../src/app.js';
+import { createSubmissionStore } from '../src/store.js';
+const dataFile=path.resolve('data/submissions.test.json');const uploadDirectory=path.resolve('uploads/test-runtime');const app=createApp({store:createSubmissionStore(dataFile),uploadDirectory});
+const valid={fullName:'Amir Latif',email:'amir@example.com',phone:'+92 300 1234567',projectTitle:'LaunchForm Portal',category:'Web Application',submissionDate:'2026-08-01',projectUrl:'https://github.com/example/launchform',techStack:'React, Express, Node.js',description:'A complete project submission portal with validation and file uploads.'};const image=Buffer.from([0x89,0x50,0x4e,0x47,0x0d,0x0a,0x1a,0x0a]);
+before(async()=>{await Promise.all([rm(dataFile,{force:true}),rm(uploadDirectory,{recursive:true,force:true})])});after(async()=>{await Promise.all([rm(dataFile,{force:true}),rm(uploadDirectory,{recursive:true,force:true})])});
+test('GET starts with an empty submission list',async()=>{const response=await request(app).get('/api/submissions').expect(200);assert.deepEqual(response.body,[])});
+test('server returns field-specific errors for invalid multipart data',async()=>{const response=await request(app).post('/api/submissions').field('fullName','A').field('email','wrong').field('phone','12').field('projectTitle','').field('category','Unknown').field('submissionDate','2099-01-01').field('projectUrl','not-a-url').field('techStack','').field('description','short').expect(400);assert.ok(response.body.errors.fullName);assert.ok(response.body.errors.email);assert.ok(response.body.errors.coverImage)});
+test('server rejects unsupported uploads',async()=>{const response=await request(app).post('/api/submissions').field(valid).attach('coverImage',Buffer.from('not an image'),{filename:'project.txt',contentType:'text/plain'}).expect(400);assert.ok(response.body.errors.coverImage)});
+test('valid project and image are persisted',async()=>{const response=await request(app).post('/api/submissions').field(valid).attach('coverImage',image,{filename:'project.png',contentType:'image/png'}).expect(201);assert.equal(response.body.submission.projectTitle,valid.projectTitle);assert.match(response.body.submission.imageUrl,/^\/uploads\//);const listed=await request(app).get('/api/submissions').expect(200);assert.equal(listed.body.length,1)});
+test('backend duplicate validation returns feedback and prevents another record',async()=>{const response=await request(app).post('/api/submissions').field(valid).attach('coverImage',image,{filename:'duplicate.png',contentType:'image/png'}).expect(409);assert.ok(response.body.errors.projectTitle);const listed=await request(app).get('/api/submissions').expect(200);assert.equal(listed.body.length,1)});

@@ -1,0 +1,3 @@
+import { AlertCircle, CheckCircle2, X } from 'lucide-react';
+import { useFormState } from '../context/FormContext';
+export default function Toast(){const{toast,dismissToast}=useFormState();if(!toast)return null;return <div className={`toast ${toast.type}`} role="status">{toast.type==='success'?<CheckCircle2 size={19}/>:<AlertCircle size={19}/>}<span>{toast.text}</span><button onClick={dismissToast} aria-label="Dismiss"><X size={17}/></button></div>}

@@ -1,0 +1,14 @@
+{
+  "name": "launchform-global-state",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": ["client", "server"],
+  "scripts": {
+    "dev": "concurrently -n API,WEB -c yellow,cyan \"npm run dev -w server\" \"npm run dev -w client\"",
+    "start": "npm run dev",
+    "build": "npm run build -w client",
+    "start:production": "npm run start -w server",
+    "test": "npm run test -w server"
+  },
+  "devDependencies": { "concurrently": "^9.1.2" }
+}
